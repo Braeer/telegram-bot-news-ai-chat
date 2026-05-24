@@ -5,6 +5,7 @@ from aiogram import Bot, Dispatcher
 
 from app.config.env import load_env_config
 from app.handlers.start_handler import build_start_router
+from app.handlers.status_handler import build_status_router
 from app.middlewares.auth_middleware import AuthMiddleware
 from app.services.auth_service import AuthService
 from app.services.template_service import TemplateService
@@ -46,6 +47,11 @@ async def main() -> None:
         build_start_router(
             template_service=template_service,
         ),
+    )
+    dp.include_router(
+        build_status_router(
+            template_service=template_service,
+        )
     )
 
     await dp.start_polling(bot)

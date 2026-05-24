@@ -1,0 +1,5 @@
+Статус:
+
+User ID: {user_id}
+Запросов: {requests}
+Tokens: {total_tokens}
