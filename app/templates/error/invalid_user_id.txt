@@ -1,0 +1,2 @@
+Укажи корректный Telegram userId.
+Пример: /add-user 123456

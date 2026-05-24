@@ -1,0 +1,5 @@
+Tokens:
+
+Всего: {total_tokens}
+Input: {input_tokens}
+Output: {output_tokens}

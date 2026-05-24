@@ -1,5 +1,7 @@
-Статус:
+Статистика:
 
-User ID: {user_id}
 Запросов: {requests}
-Tokens: {total_tokens}
+Input tokens: {input_tokens}
+Output tokens: {output_tokens}
+Всего tokens: {total_tokens}
+Последний запрос: {last_request_at}

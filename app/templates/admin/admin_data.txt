@@ -1,0 +1,6 @@
+Админ-панель:
+
+Пользователей: {users_count}
+Администраторов: {admins_count}
+Всего запросов: {total_requests}
+Всего tokens: {total_tokens}
