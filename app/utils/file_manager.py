@@ -1,27 +1,28 @@
 import json
 from pathlib import Path
 
+DATA_DIR = Path("data")
 
-def ensure_project_structure(data_dir: str, main_admin_id: int) -> None:
-    root = Path(data_dir)
+
+def ensure_project_structure(main_admin_id: int) -> None:
 
     directories = [
-        root,
-        root / "chats",
-        root / "settings",
-        root / "settings" / "users",
-        root / "analytics",
-        root / "analytics" / "users",
-        root / "errors",
-        root / "logs",
-        root / "time-data",
+        DATA_DIR,
+        DATA_DIR / "chats",
+        DATA_DIR / "settings",
+        DATA_DIR / "settings" / "users",
+        DATA_DIR / "analytics",
+        DATA_DIR / "analytics" / "users",
+        DATA_DIR / "errors",
+        DATA_DIR / "logs",
+        DATA_DIR / "time-data",
     ]
 
     for directory in directories:
         directory.mkdir(parents=True, exist_ok=True)
 
     _ensure_json_file(
-        root / "settings" / "access.json",
+        DATA_DIR / "settings" / "access.json",
         {
             "admins": [main_admin_id],
             "users": [main_admin_id],
@@ -29,14 +30,14 @@ def ensure_project_structure(data_dir: str, main_admin_id: int) -> None:
     )
 
     _ensure_json_file(
-        root / "settings" / "global.json",
+        DATA_DIR / "settings" / "global.json",
         {
             "default_model": "mock",
         },
     )
 
     _ensure_json_file(
-        root / "analytics" / "global.json",
+        DATA_DIR / "analytics" / "global.json",
         {
             "total_requests": 0,
             "total_tokens": 0,
