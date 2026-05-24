@@ -2,8 +2,8 @@ import asyncio
 import logging
 
 from aiogram import Bot, Dispatcher
-from app.config.env import load_env_config
 
+from app.config.env import load_env_config
 from app.utils.file_manager import ensure_project_structure
 
 
@@ -11,7 +11,6 @@ async def main() -> None:
     config = load_env_config()
 
     ensure_project_structure(
-        data_dir=config.data_dir,
         main_admin_id=config.main_admin_id,
     )
 
