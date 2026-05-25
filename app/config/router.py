@@ -8,13 +8,28 @@ from app.handlers.settings_handler import build_settings_router
 from app.handlers.start_handler import build_start_router
 from app.handlers.status_handler import build_status_router
 from app.middlewares.auth_middleware import AuthMiddleware
+from app.middlewares.error_middleware import ErrorMiddleware
+from app.middlewares.rate_limit_middleware import RateLimitMiddleware
 
 
 def setup_routers(dp: Dispatcher, container: AppContainer) -> None:
     dp.message.middleware(
+        ErrorMiddleware(
+            template_service=container.template_service,
+        )
+    )
+
+    dp.message.middleware(
         AuthMiddleware(
             auth_service=container.auth_service,
             template_service=container.template_service,
+        )
+    )
+
+    dp.message.middleware(
+        RateLimitMiddleware(
+            template_service=container.template_service,
+            limit_seconds=2.0,
         )
     )
 
