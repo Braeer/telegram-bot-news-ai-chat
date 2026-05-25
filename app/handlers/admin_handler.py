@@ -154,7 +154,7 @@ def build_admin_router(
 
         await message.answer(template_service.load("admin/global_settings_updated.txt"))
 
-        return router
+    return router
 
 
 def _parse_user_id(text: str | None) -> int | None:
