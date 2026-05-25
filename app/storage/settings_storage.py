@@ -1,4 +1,5 @@
 import json
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -39,3 +40,37 @@ class SettingsStorage:
             access_config["users"].append(user_id)
 
         self.write_access_config(access_config)
+
+    def read_global_settings(self) -> dict:
+        path = self.data_dir / "settings" / "global.json"
+
+        with path.open(encoding="utf-8") as file:
+            return json.load(file)
+
+    def write_global_settings(self, data: dict) -> None:
+        path = self.data_dir / "settings" / "global.json"
+
+        path.write_text(
+            json.dumps(data, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+
+    def read_user_settings(self, user_id: int) -> dict:
+        path = self.data_dir / "settings" / "users" / f"{user_id}.json"
+
+        if not path.exists():
+            return {}
+
+        with path.open(encoding="utf-8") as file:
+            return json.load(file)
+
+    def write_user_settings(self, user_id: int, data: dict) -> None:
+        path = self.data_dir / "settings" / "users" / f"{user_id}.json"
+
+        data["user_id"] = user_id
+        data["updated_at"] = datetime.now(UTC).isoformat()
+
+        path.write_text(
+            json.dumps(data, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )

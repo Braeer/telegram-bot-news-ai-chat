@@ -31,6 +31,13 @@ def ensure_project_structure(main_admin_id: int) -> None:
         DATA_DIR / "settings" / "global.json",
         {
             "default_model": "mock",
+            "allowed_models": ["mock"],
+            "default_temperature": 0.7,
+            "max_tokens_per_request": 2000,
+            "max_context_messages": 20,
+            "allow_user_model_change": True,
+            "allow_user_temperature_change": True,
+            "allow_user_max_tokens_change": False,
         },
     )
 

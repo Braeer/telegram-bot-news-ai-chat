@@ -1,0 +1,8 @@
+Настройки:
+
+Модель: {model}
+Temperature: {temperature}
+Max tokens: {max_tokens}
+
+Prompt:
+{system_prompt}

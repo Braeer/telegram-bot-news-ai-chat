@@ -3,6 +3,7 @@ from aiogram import Dispatcher
 from app.config.container import AppContainer
 from app.handlers.admin_handler import build_admin_router
 from app.handlers.fallback_handler import build_fallback_router
+from app.handlers.settings_handler import build_settings_router
 from app.handlers.start_handler import build_start_router
 from app.handlers.status_handler import build_status_router
 from app.middlewares.auth_middleware import AuthMiddleware
@@ -32,6 +33,13 @@ def setup_routers(dp: Dispatcher, container: AppContainer) -> None:
     dp.include_router(
         build_admin_router(
             admin_service=container.admin_service,
+            template_service=container.template_service,
+        )
+    )
+
+    dp.include_router(
+        build_settings_router(
+            settings_service=container.settings_service,
             template_service=container.template_service,
         )
     )
