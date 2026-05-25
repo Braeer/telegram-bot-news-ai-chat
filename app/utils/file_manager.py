@@ -13,8 +13,6 @@ def ensure_project_structure(main_admin_id: int) -> None:
         DATA_DIR / "settings" / "users",
         DATA_DIR / "analytics",
         DATA_DIR / "analytics" / "users",
-        DATA_DIR / "errors",
-        DATA_DIR / "logs",
         DATA_DIR / "time-data",
     ]
 

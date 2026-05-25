@@ -3,29 +3,15 @@ import logging
 
 from aiogram import Bot, Dispatcher
 
+from app.config.container import build_container
 from app.config.env import load_env_config
-from app.handlers.admin_handler import build_admin_router
-from app.handlers.fallback_handler import build_fallback_router
-from app.handlers.start_handler import build_start_router
-from app.handlers.status_handler import build_status_router
-from app.middlewares.auth_middleware import AuthMiddleware
-from app.services.admin_service import AdminService
-from app.services.analytics_service import AnalyticsService
-from app.services.auth_service import AuthService
-from app.services.template_service import TemplateService
-from app.storage.analytics_storage import AnalyticsStorage
-from app.storage.settings_storage import SettingsStorage
+from app.config.router import setup_routers
 from app.utils.file_manager import ensure_project_structure
+from app.utils.scheduler import setup_scheduler
 
 
 async def main() -> None:
     config = load_env_config()
-    template_service = TemplateService()
-    settings_storage = SettingsStorage()
-    analytics_storage = AnalyticsStorage()
-    analytics_service = AnalyticsService(
-        analytics_storage=analytics_storage,
-    )
 
     ensure_project_structure(
         main_admin_id=config.main_admin_id,
@@ -36,51 +22,17 @@ async def main() -> None:
         format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
     )
 
+    container = build_container()
+
+    setup_scheduler(container.cleanup_service)
+
     bot = Bot(token=config.telegram_bot_token)
     dp = Dispatcher()
 
+    setup_routers(dp, container)
+
     logging.info("Бот запущен")
 
-    auth_service = AuthService(
-        settings_storage=settings_storage,
-    )
-
-    admin_service = AdminService(
-        auth_service=auth_service,
-        settings_storage=settings_storage,
-        analytics_storage=analytics_storage,
-    )
-
-    dp.message.middleware(
-        AuthMiddleware(
-            auth_service=auth_service,
-            template_service=template_service,
-        )
-    )
-
-    dp.include_router(
-        build_start_router(
-            template_service=template_service,
-        ),
-    )
-    dp.include_router(
-        build_status_router(
-            template_service=template_service,
-            analytics_service=analytics_service,
-        )
-    )
-    dp.include_router(
-        build_admin_router(
-            admin_service=admin_service,
-            template_service=template_service,
-        )
-    )
-
-    dp.include_router(
-        build_fallback_router(
-            template_service=template_service,
-        )
-    )
     await dp.start_polling(bot)
 
 

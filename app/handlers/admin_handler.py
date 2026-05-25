@@ -45,22 +45,6 @@ def build_admin_router(
             )
         )
 
-    @router.message(Command("admin-error"))
-    async def admin_error_handler(message: Message, user_id: int) -> None:
-        if not admin_service.is_admin(user_id):
-            await message.answer(template_service.load("error/admin_only.txt"))
-            return
-
-        file_path = admin_service.get_error_file_path()
-
-        if not file_path.exists() or file_path.stat().st_size == 0:
-            await message.answer(template_service.load("admin/error_file_empty.txt"))
-            return
-
-        await message.answer_document(
-            FSInputFile(file_path),
-        )
-
     @router.message(Command("add-user"))
     async def add_user_handler(message: Message, user_id: int) -> None:
         if not admin_service.is_admin(user_id):

@@ -44,6 +44,3 @@ class AdminService:
 
     def add_admin(self, user_id: int) -> None:
         self.settings_storage.add_admin(user_id)
-
-    def get_error_file_path(self) -> Path:
-        return Path("data/errors/errors.log")
