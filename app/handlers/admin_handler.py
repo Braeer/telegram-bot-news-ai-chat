@@ -154,6 +154,56 @@ def build_admin_router(
 
         await message.answer(template_service.load("admin/global_settings_updated.txt"))
 
+    @router.message(Command("admin-set-temperature"))
+    async def admin_set_temperature_handler(message: Message, user_id: int) -> None:
+        if not admin_service.is_admin(user_id):
+            await message.answer(template_service.load("error/admin_only.txt"))
+            return
+
+        value = _get_command_value(message.text)
+
+        try:
+            temperature = float(value) if value is not None else None
+        except ValueError:
+            temperature = None
+
+        if temperature is None or temperature < 0 or temperature > 2:
+            await message.answer(template_service.load("error/invalid_setting_value.txt"))
+            return
+
+        admin_service.update_global_setting("default_temperature", temperature)
+        await message.answer(template_service.load("admin/global_settings_updated.txt"))
+
+    @router.message(Command("admin-allow-temperature-change"))
+    async def admin_allow_temperature_change_handler(message: Message, user_id: int) -> None:
+        if not admin_service.is_admin(user_id):
+            await message.answer(template_service.load("error/admin_only.txt"))
+            return
+
+        value = _parse_bool(_get_command_value(message.text))
+
+        if value is None:
+            await message.answer(template_service.load("error/invalid_setting_value.txt"))
+            return
+
+        admin_service.update_global_setting("allow_user_temperature_change", value)
+        await message.answer(template_service.load("admin/global_settings_updated.txt"))
+
+    @router.message(Command("admin-allow-max-tokens-change"))
+    async def admin_allow_max_tokens_change_handler(message: Message, user_id: int) -> None:
+        if not admin_service.is_admin(user_id):
+            await message.answer(template_service.load("error/admin_only.txt"))
+            return
+
+        value = _parse_bool(_get_command_value(message.text))
+
+        if value is None:
+            await message.answer(template_service.load("error/invalid_setting_value.txt"))
+            return
+
+        admin_service.update_global_setting("allow_user_max_tokens_change", value)
+        await message.answer(template_service.load("admin/global_settings_updated.txt"))
+
     return router
 
 

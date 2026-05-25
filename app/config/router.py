@@ -2,6 +2,7 @@ from aiogram import Dispatcher
 
 from app.config.container import AppContainer
 from app.handlers.admin_handler import build_admin_router
+from app.handlers.chat_handler import build_chat_router
 from app.handlers.fallback_handler import build_fallback_router
 from app.handlers.settings_handler import build_settings_router
 from app.handlers.start_handler import build_start_router
@@ -40,6 +41,13 @@ def setup_routers(dp: Dispatcher, container: AppContainer) -> None:
     dp.include_router(
         build_settings_router(
             settings_service=container.settings_service,
+            template_service=container.template_service,
+        )
+    )
+
+    dp.include_router(
+        build_chat_router(
+            chat_service=container.chat_service,
             template_service=container.template_service,
         )
     )

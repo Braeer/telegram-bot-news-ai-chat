@@ -51,10 +51,17 @@ def ensure_project_structure(main_admin_id: int) -> None:
 
 
 def _ensure_json_file(path: Path, default_data: dict) -> None:
-    if path.exists():
+    if not path.exists():
+        path.write_text(
+            json.dumps(default_data, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
         return
 
+    current_data = json.loads(path.read_text(encoding="utf-8"))
+    updated_data = default_data | current_data
+
     path.write_text(
-        json.dumps(default_data, ensure_ascii=False, indent=2) + "\n",
+        json.dumps(updated_data, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )

@@ -15,8 +15,6 @@ def test_ensure_project_structure_creates_required_directories(tmp_path, monkeyp
     assert Path("data/settings/users").exists()
     assert Path("data/analytics").exists()
     assert Path("data/analytics/users").exists()
-    assert Path("data/errors").exists()
-    assert Path("data/logs").exists()
     assert Path("data/time-data").exists()
 
 

@@ -34,7 +34,6 @@ def build_settings_router(
             return
 
         settings_service.update_user_prompt(user_id, prompt)
-
         await message.answer(template_service.load("user/prompt_updated.txt"))
 
     @router.message(Command("set-model"))
@@ -47,6 +46,43 @@ def build_settings_router(
 
         try:
             settings_service.update_user_model(user_id, model)
+        except ValueError as error:
+            await message.answer(str(error))
+            return
+
+        await message.answer(template_service.load("user/settings_updated.txt"))
+
+    @router.message(Command("set-temperature"))
+    async def set_temperature_handler(message: Message, user_id: int) -> None:
+        value = _get_command_value(message.text)
+
+        try:
+            temperature = float(value) if value is not None else None
+        except ValueError:
+            temperature = None
+
+        if temperature is None:
+            await message.answer(template_service.load("error/invalid_setting_value.txt"))
+            return
+
+        try:
+            settings_service.update_user_temperature(user_id, temperature)
+        except ValueError as error:
+            await message.answer(str(error))
+            return
+
+        await message.answer(template_service.load("user/settings_updated.txt"))
+
+    @router.message(Command("set-max-tokens"))
+    async def set_max_tokens_handler(message: Message, user_id: int) -> None:
+        value = _get_command_value(message.text)
+
+        if not value or not value.isdigit():
+            await message.answer(template_service.load("error/invalid_setting_value.txt"))
+            return
+
+        try:
+            settings_service.update_user_max_tokens(user_id, int(value))
         except ValueError as error:
             await message.answer(str(error))
             return

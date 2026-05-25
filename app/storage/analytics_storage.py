@@ -38,3 +38,19 @@ class AnalyticsStorage:
 
         with path.open(encoding="utf-8") as file:
             return json.load(file)
+
+    def write_user_analytics(self, user_id: int, data: dict) -> None:
+        path = self.data_dir / "analytics" / "users" / f"{user_id}.json"
+
+        path.write_text(
+            json.dumps(data, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+
+    def write_global_analytics(self, data: dict) -> None:
+        path = self.data_dir / "analytics" / "global.json"
+
+        path.write_text(
+            json.dumps(data, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )

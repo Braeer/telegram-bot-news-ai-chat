@@ -1,17 +1,9 @@
-import shutil
-from pathlib import Path
+from app.services.chat_service import ChatService
 
 
 class CleanupService:
-    def __init__(self, chats_dir: Path = Path("data/chats")) -> None:
-        self.chats_dir = chats_dir
+    def __init__(self, chat_service: ChatService) -> None:
+        self.chat_service = chat_service
 
     def cleanup_chats(self) -> None:
-        if not self.chats_dir.exists():
-            return
-
-        for path in self.chats_dir.iterdir():
-            if path.is_file() and path.suffix == ".json":
-                path.unlink()
-            elif path.is_dir():
-                shutil.rmtree(path)
+        self.chat_service.cleanup_expired_messages()

@@ -9,7 +9,6 @@ def setup_scheduler(cleanup_service: CleanupService) -> AsyncIOScheduler:
     scheduler.add_job(
         cleanup_service.cleanup_chats,
         trigger="cron",
-        day_of_week="sun",
         hour=0,
         minute=0,
     )
