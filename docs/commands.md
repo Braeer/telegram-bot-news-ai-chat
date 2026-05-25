@@ -14,47 +14,22 @@
 
 Показывает статистику пользователя.
 
-Пример:
-
-```text
-Статистика:
-
-Запросов: 0
-Input tokens: 0
-Output tokens: 0
-Всего tokens: 0
-Последний запрос: нет данных
-```
-
 ---
 
 ## `/settings`
 
-Показывает итоговые настройки пользователя.
-
-Пример:
-
-```text
-Настройки:
-
-Модель: mock
-Temperature: 0.7
-Max tokens: 2000
-
-Prompt:
-не задан
-```
+Показывает настройки пользователя.
 
 ---
 
 ## `/prompt <text>`
 
-Обновляет пользовательский prompt.
+Изменяет пользовательский prompt.
 
 Пример:
 
 ```text
-/prompt Пиши новости коротко и строго
+/prompt Пиши кратко и строго
 ```
 
 ---
@@ -66,8 +41,46 @@ Prompt:
 Пример:
 
 ```text
-/set-model gpt-4.1-mini
+/set-model mock
 ```
+
+---
+
+## `/set-temperature <value>`
+
+Изменяет temperature пользователя.
+
+Пример:
+
+```text
+/set-temperature 0.7
+```
+
+---
+
+## `/set-max-tokens <value>`
+
+Изменяет max tokens пользователя.
+
+Пример:
+
+```text
+/set-max-tokens 1200
+```
+
+---
+
+## `/new`
+
+Создаёт новый чат.
+
+Старый чат удаляется.
+
+---
+
+## `/reset`
+
+Полностью удаляет текущий чат.
 
 ---
 
@@ -95,35 +108,35 @@ Prompt:
 
 Изменяет глобальную модель.
 
-Пример:
-
-```text
-/admin-set-model gpt-4.1-mini
-```
-
 ---
 
 ## `/admin-set-max-tokens <value>`
 
 Изменяет глобальный лимит токенов.
 
-Пример:
+---
 
-```text
-/admin-set-max-tokens 2000
-```
+## `/admin-set-temperature <value>`
+
+Изменяет глобальный temperature.
 
 ---
 
 ## `/admin-allow-model-change <true|false>`
 
-Разрешает или запрещает пользователям менять модель.
+Разрешает или запрещает изменение модели пользователями.
 
-Пример:
+---
 
-```text
-/admin-allow-model-change false
-```
+## `/admin-allow-temperature-change <true|false>`
+
+Разрешает или запрещает изменение temperature пользователями.
+
+---
+
+## `/admin-allow-max-tokens-change <true|false>`
+
+Разрешает или запрещает изменение max tokens пользователями.
 
 ---
 

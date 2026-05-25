@@ -10,14 +10,18 @@ Telegram-бот для работы с ChatGPT API.
 
 - авторизация пользователей по Telegram userId
 - middleware-проверка доступа
-- пользовательские настройки
-- глобальные настройки
-- персональный prompt
+- персональные настройки пользователя
+- глобальные настройки бота
+- prompt для каждого пользователя
+- хранение чатов
+- автоочистка сообщений старше 2 дней
 - аналитика пользователей
-- автоочистка чатов
-- хранение данных в JSON
-- fallback для неизвестных команд
+- mock AI без OpenAI токена
 - Docker-ready архитектура
+- rate limit middleware
+- error middleware
+- fallback для неизвестных команд
+- unit тесты
 
 ---
 
@@ -37,13 +41,13 @@ Telegram-бот для работы с ChatGPT API.
 
 ```text
 app/
+  config/
   handlers/
   middlewares/
   services/
   storage/
   templates/
   utils/
-  config/
 
 data/
   analytics/
@@ -51,16 +55,23 @@ data/
   settings/
 
 docs/
+tests/
 ```
 
 ---
 
-# Запуск
+# Docker
 
-## Локально
+## Запуск
 
 ```bash
-python -m app.main
+docker compose up --build
+```
+
+## Логи
+
+```bash
+docker compose logs -f
 ```
 
 ---
