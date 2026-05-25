@@ -44,3 +44,12 @@ class AdminService:
 
     def add_admin(self, user_id: int) -> None:
         self.settings_storage.add_admin(user_id)
+
+    def get_global_settings(self) -> dict:
+        return self.settings_storage.read_global_settings()
+
+    def update_global_setting(self, key: str, value: object) -> None:
+        global_settings = self.settings_storage.read_global_settings()
+        global_settings[key] = value
+
+        self.settings_storage.write_global_settings(global_settings)

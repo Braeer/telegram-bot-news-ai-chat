@@ -1,0 +1,11 @@
+Глобальные настройки:
+
+Default model: {default_model}
+Allowed models: {allowed_models}
+Temperature: {default_temperature}
+Max tokens per request: {max_tokens_per_request}
+Max context messages: {max_context_messages}
+
+User model change: {allow_user_model_change}
+User temperature change: {allow_user_temperature_change}
+User max tokens change: {allow_user_max_tokens_change}
